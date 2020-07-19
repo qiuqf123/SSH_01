@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bdqn.dao.EntryMapper">
+
+    <select id="findEntry" resultType="com.bdqn.entity.Entry">
+        SELECT * FROM ebook_entry
+        <where>
+            <if test="categoryId!=null">
+                and categoryId=#{categoryId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findEntryById" resultType="com.bdqn.entity.Entry">
+        SELECT * FROM ebook_entry WHERE id=#{id}
+    </select>
+
+    <insert id="addEntry">
+        INSERT INTO  ebook_entry(categoryId,title,summary,uploadUser,createDate)
+VALUES(#{categoryId},#{title},#{summary},#{uploadUser},#{createDate})
+    </insert>
+
+    <update id="updateEntry">
+        UPDATE  ebook_entry
+        <set>
+            <if test="categoryId!=null">
+                categoryId=#{categoryId}
+            </if>
+            <if test="title!=null and title!=''">
+                title=#{title}
+            </if>
+            <if test="summary!=null and summary!=''">
+                summary=#{summary}
+            </if>
+            <if test="uploadUser!=null and uploadUser!=''">
+                uploadUser=#{uploadUser}
+            </if>
+            <if test="createDate!=null">
+                createDate=#{createDate}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteEntry">
+        DELETE FROM ebook_entry WHERE id=#{id}
+    </delete>
+
+</mapper>
